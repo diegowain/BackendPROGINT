@@ -42,8 +42,8 @@ export default class EventoDAO {
 
         if(evento instanceof Evento){   
             const conexao = await conectar();
-            const sql = `UPDATE eventos SET descricao = ?, data = ?, horario = ?,
-             local = ?, valor = ?, ingresso = ? WHERE titulo = ?`;
+            const sql = `UPDATE eventos SET titulo = ?, data = ?, horario = ?,
+             local = ?, valor = ?, ingresso = ? WHERE descricao = ?`;
             const parametros = [
                 evento.descricao,
                 evento.data,
@@ -63,7 +63,7 @@ export default class EventoDAO {
 
         if(evento instanceof Evento){
             const conexao = await conectar();
-            const sql = `DELETE FROM eventos WHERE titulo = ?`;
+            const sql = `DELETE FROM eventos WHERE descricao = ?`;
             const parametros = [
                 evento.titulo
             ]
@@ -76,7 +76,7 @@ export default class EventoDAO {
         let sql = "";
         let parametros = []
         if(termoBusca){
-            sql = `SELECT * FROM eventos WHERE titulo =  ? order by data`
+            sql = `SELECT * FROM eventos WHERE descricao =  ? order by data`
             parametros.push(termoBusca);
 
         }
