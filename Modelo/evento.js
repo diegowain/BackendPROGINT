@@ -1,4 +1,6 @@
+import conectar from "../DAO/Conexao.js"
 import EventoDAO from "../DAO/EventoDAO.js"
+
 export default class Evento{
     #titulo
     #descricao
@@ -67,7 +69,13 @@ export default class Evento{
     }
 
     toString(){
-        return `Titulo: ${this.#titulo} \nDescrição: ${this.#descricao} \nData: ${this.#data} \nHorario: ${this.#horario} \nLocal: ${this.#local} \nValor: ${this.#valor} \nIngresso: ${this.#ingresso}`
+        return `Titulo: ${this.#titulo} 
+        Descrição: ${this.#descricao}
+        Data: ${this.#data} 
+        Horario: ${this.#horario}
+        Local: ${this.#local} 
+        Valor: ${this.#valor}
+        Ingresso: ${this.#ingresso}`
     }
 
     async incluir(){
@@ -85,9 +93,11 @@ export default class Evento{
         await eveDAO.excluir(this);
     }
 
-    async consultar(){
+
+    async consultar (termoBusca) {
         const eveDAO = new EventoDAO();
-        return await eveDAO.consultar(termoBusca);
+        return await eveDAO.consultar(termoBusca)
+   
     }
 
 }

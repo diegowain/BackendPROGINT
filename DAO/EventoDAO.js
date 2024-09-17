@@ -10,8 +10,14 @@ export default class EventoDAO {
     async init() {
         try{
         const conexao = await conectar();
-        const sql =`CREATE TABLE IF NOT EXISTS eventos (titulo VARCHAR(255)  PRIMARY KEY,descricao VARCHAR(255)
-         data VARCHAR(255), horario VARCHAR(255), local VARCHAR(255), valor INT, ingresso INT)`
+        const sql =`CREATE TABLE IF NOT EXISTS eventos 
+         (titulo VARCHAR(255)  PRIMARY KEY,
+         descricao VARCHAR(255),
+         data VARCHAR(255),
+         horario VARCHAR(255),
+         local VARCHAR(255),
+         valor INT,
+         ingresso INT)`
         await conexao.execute(sql);
         await global.poolConexoes.releaseConnection(conexao);
         console.log("O Banco de Dados foi iniciado")
@@ -23,7 +29,8 @@ export default class EventoDAO {
     async gravar(evento) {
         if(evento instanceof Evento){
             const conexao = await conectar();
-            const sql = `INSERT INTO eventos (titulo,descricao, data, horario, local, valor, ingresso) VALUES (?, ?, ?, ?, ?, ?, ?)`
+            const sql = `INSERT INTO eventos (titulo,descricao, data, horario, local, valor, ingresso)
+             VALUES (?, ?, ?, ?, ?, ?, ?)`
             const parametros = [
                 evento.titulo,
                 evento.descricao,
@@ -45,13 +52,13 @@ export default class EventoDAO {
             const sql = `UPDATE eventos SET titulo = ?, data = ?, horario = ?,
              local = ?, valor = ?, ingresso = ? WHERE descricao = ?`;
             const parametros = [
-                evento.descricao,
+                evento.titulo,
                 evento.data,
                 evento.horario,
                 evento.local,
                 evento.valor,
                 evento.ingresso,
-                evento.titulo
+                evento.descricao
             ]
             await conexao.execute(sql,parametros);
             await global.poolConexoes.releaseConnection(conexao);
@@ -65,7 +72,7 @@ export default class EventoDAO {
             const conexao = await conectar();
             const sql = `DELETE FROM eventos WHERE descricao = ?`;
             const parametros = [
-                evento.titulo
+                evento.descricao
             ]
             await conexao.execute(sql,parametros);
             await global.poolConexoes.releaseConnection(conexao);
@@ -76,7 +83,7 @@ export default class EventoDAO {
         let sql = "";
         let parametros = []
         if(termoBusca){
-            sql = `SELECT * FROM eventos WHERE descricao =  ? order by data`
+            sql = `SELECT * FROM eventos WHERE descricao like  ? order by data`
             parametros.push(termoBusca);
 
         }
