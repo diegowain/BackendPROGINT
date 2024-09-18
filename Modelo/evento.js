@@ -70,12 +70,25 @@ export default class Evento{
 
     toString(){
         return `Titulo: ${this.#titulo} 
-        Descrição: ${this.#descricao}
-        Data: ${this.#data} 
-        Horario: ${this.#horario}
-        Local: ${this.#local} 
-        Valor: ${this.#valor}
-        Ingresso: ${this.#ingresso}`
+                Descrição: ${this.#descricao}
+                Data: ${this.#data} 
+                Horario: ${this.#horario}
+                Local: ${this.#local} 
+                Valor: ${this.#valor}
+                Ingresso: ${this.#ingresso}`
+    }
+
+    toJSON(){
+        return {
+            titulo: this.#titulo,
+            descricao: this.#descricao,
+            data: this.#data,
+            horario: this.#horario,
+            local: this.#local,
+            valor: this.#valor,
+            ingresso: this.#ingresso
+
+        }
     }
 
     async incluir(){

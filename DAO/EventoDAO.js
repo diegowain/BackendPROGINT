@@ -70,7 +70,7 @@ export default class EventoDAO {
 
         if(evento instanceof Evento){
             const conexao = await conectar();
-            const sql = `DELETE FROM eventos WHERE descricao = ?`;
+            const sql = `DELETE FROM eventos WHERE descricao like ?`;
             const parametros = [
                 evento.descricao
             ]
