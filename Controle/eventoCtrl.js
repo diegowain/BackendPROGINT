@@ -83,10 +83,10 @@ export default class ClienteCtrl {
     excluir(requisicao,resposta){
         if(requisicao.method == "DELETE" && requisicao.is("application/json")){
             const dados = requisicao.body;
-            const descricao = dados.descricao;
+            const data = dados.data;
 
-            if(descricao){
-                const evento = new Evento(descricao);
+            if(data){
+                const evento = new Evento(data);
                 evento.excluir().then(() => {
                     resposta.status(200).json({
                         "status": true,
@@ -102,7 +102,7 @@ export default class ClienteCtrl {
     else{
         resposta.status(400).json({
             "status": false,
-            "mensagem": "Requisição inválida! Informe a descrição do evento"
+            "mensagem": "Requisição inválida! Informe a data do evento"
         
         })
     }

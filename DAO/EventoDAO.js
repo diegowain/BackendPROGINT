@@ -11,13 +11,13 @@ export default class EventoDAO {
         try{
         const conexao = await conectar();
         const sql =`CREATE TABLE IF NOT EXISTS eventos 
-         (titulo VARCHAR(255)  PRIMARY KEY,
-         descricao VARCHAR(255),
-         data VARCHAR(255),
-         horario VARCHAR(255),
-         local VARCHAR(255),
-         valor INT,
-         ingresso INT)`
+        (titulo VARCHAR(255) PRIMARY KEY NOT NULL,
+        descricao VARCHAR(255) NOT NULL,
+        data VARCHAR(255) NOT NULL,
+        horario VARCHAR(255) NOT NULL, 
+        local VARCHAR(255) NOT NULL,
+        valor INT NOT NULL, 
+        ingresso INT NOT NULL);`
         await conexao.execute(sql);
         await global.poolConexoes.releaseConnection(conexao);
         console.log("O Banco de Dados foi iniciado")
@@ -70,10 +70,12 @@ export default class EventoDAO {
 
         if(evento instanceof Evento){
             const conexao = await conectar();
-            const sql = `DELETE FROM eventos WHERE descricao like ?`;
+            const sql = `DELETE FROM eventos WHERE data = ?;`;
+          
             const parametros = [
-                evento.descricao
+                evento.data
             ]
+
             await conexao.execute(sql,parametros);
             await global.poolConexoes.releaseConnection(conexao);
         }
@@ -83,7 +85,7 @@ export default class EventoDAO {
         let sql = "";
         let parametros = []
         if(termoBusca){
-            sql = `SELECT * FROM eventos WHERE descricao like  ? order by data`
+            sql = `SELECT * FROM eventos WHERE descricao =  ? order by data`
             parametros.push(termoBusca);
 
         }
