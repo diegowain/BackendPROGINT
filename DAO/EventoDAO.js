@@ -70,10 +70,10 @@ export default class EventoDAO {
 
         if(evento instanceof Evento){
             const conexao = await conectar();
-            const sql = `DELETE FROM eventos WHERE data = ?;`;
+            const sql = `DELETE FROM eventos WHERE titulo = ?;`;
           
             const parametros = [
-                evento.data
+                evento.titulo
             ]
 
             await conexao.execute(sql,parametros);

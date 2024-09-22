@@ -83,10 +83,10 @@ export default class ClienteCtrl {
     excluir(requisicao,resposta){
         if(requisicao.method == "DELETE" && requisicao.is("application/json")){
             const dados = requisicao.body;
-            const data = dados.data;
+            const titulo = dados.titulo;
 
-            if(data){
-                const evento = new Evento(data);
+            if(titulo){
+                const evento = new Evento(titulo);
                 evento.excluir().then(() => {
                     resposta.status(200).json({
                         "status": true,
