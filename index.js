@@ -21,12 +21,15 @@ const evento = new Evento("Futebas", "Campeonato Brasileiro", "10/10/2020", "10:
 
 import express from "express"
 import rotaEvento from "./Rotas/rotaEvento.js"
-
+import cors from "cors"
 
 const app = express();
 const host = '0.0.0.0';
 const porta = 3024;
 
+app.use(cors({
+    origin: '*',
+}));
 app.use(express.json());
 
 app.use('/eventos', rotaEvento)
