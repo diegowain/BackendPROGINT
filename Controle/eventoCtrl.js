@@ -126,7 +126,10 @@ export default class ClienteCtrl {
 
         if(requisicao.method == "GET" && requisicao.is("application/json")){
             const evento = new Evento();
-            evento.consultar(termoBusca).then((eventos) => {
+            evento.consultar(termoBusca).then((respostaAPI) => {
+                if(respostaAPI.status == true){
+                    exibirTabelaEventos(respostaAPI.listaEventos);
+                }
                 return resposta.status(200).json({
                     "status": true,
                     "listaEventos": eventos
